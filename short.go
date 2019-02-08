@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/hmac"
 	"crypto/sha256"
 	"fmt"
 	"log"
@@ -25,7 +26,7 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 
 // CreateSha7 creates the shortened version of a string
 func CreateSha7(url string) string {
-	h := sha256.New()
+	h := hmac.New(sha256.New, []byte("secret"))
 	h.Write([]byte(url))
 	return fmt.Sprintf("%x \n", h.Sum(nil)[0:4])
 }
